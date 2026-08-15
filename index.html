@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will you go out with me?</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, #ffd6e8, #ffb6d5 40%, #ff8fc0);
+    font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+    overflow: hidden;
+    padding: 20px;
+  }
+
+  .card {
+    background: #fff0f6;
+    border: 4px solid #ff5fa2;
+    border-radius: 24px;
+    padding: 30px 25px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(255, 95, 162, 0.4);
+    position: relative;
+  }
+
+  .cat {
+    font-size: 60px;
+    animation: bounce 1.4s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  h1 {
+    color: #d6336c;
+    font-size: 24px;
+    margin: 10px 0 5px;
+    text-shadow: 1px 1px 0 #fff;
+  }
+
+  .sub {
+    color: #a6336c;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  #step1 .buttons {
+    position: relative;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  button {
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+
+  #yesBtn {
+    background: #ff5fa2;
+    color: white;
+    padding: 14px 30px;
+    font-size: 16px;
+    box-shadow: 0 4px 0 #c92e73;
+  }
+
+  #yesBtn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #c92e73;
+  }
+
+  #noBtn {
+    background: #ffe3ee;
+    color: #d6336c;
+    padding: 10px 22px;
+    font-size: 14px;
+    position: absolute;
+    border: 2px solid #ffb6d5;
+  }
+
+  .hint {
+    font-size: 11px;
+    color: #c05c8a;
+    margin-top: 10px;
+  }
+
+  #step2 {
+    display: none;
+  }
+
+  #step2 h2 {
+    color: #d6336c;
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .field {
+    text-align: left;
+    margin: 14px 0;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #a6336c;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input[type="date"], select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid #ffb6d5;
+    background: #fff;
+    color: #d6336c;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  #confirmBtn {
+    background: #ff5fa2;
+    color: white;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 15px;
+    margin-top: 10px;
+    box-shadow: 0 4px 0 #c92e73;
+  }
+
+  #confirmBtn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #c92e73;
+  }
+
+  #step3 {
+    display: none;
+  }
+
+  #step3 .cat {
+    font-size: 70px;
+  }
+
+  #step3 h2 {
+    color: #d6336c;
+  }
+
+  #summary {
+    background: #ffe3ee;
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #a6336c;
+    text-align: left;
+  }
+
+  #summary b {
+    color: #d6336c;
+  }
+
+  .hearts span {
+    position: absolute;
+    font-size: 18px;
+    animation: floatUp 2.5s ease-in forwards;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-200px) scale(1.4); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+
+  <div id="step1">
+    <div class="cat">🐱</div>
+    <h1>Will you go out<br>with me?</h1>
+    <div class="sub">better say yes...</div>
+    <div class="buttons" id="buttonsWrap">
+      <button id="yesBtn" onclick="goToStep2()">YES</button>
+      <button id="noBtn" onmouseover="dodge()" onclick="dodge()">No</button>
+    </div>
+    <div class="hint">psst, the "no" button is shy 🙈</div>
+  </div>
+
+  <div id="step2">
+    <div class="cat">💌</div>
+    <h2>yay!! let's plan it</h2>
+    <div class="field">
+      <label for="dateInput">Pick a date</label>
+      <input type="date" id="dateInput">
+    </div>
+    <div class="field">
+      <label for="placeInput">Where do you want to eat?</label>
+      <select id="placeInput">
+        <option value="">-- choose one --</option>
+        <option value="Cafe / coffee date">Cafe / coffee date ☕</option>
+        <option value="Korean BBQ">Korean BBQ 🍖</option>
+        <option value="Ramen / Japanese food">Ramen / Japanese food 🍜</option>
+        <option value="Milk tea and snacks">Milk tea and snacks 🧋</option>
+        <option value="Fancy dinner">Fancy dinner 🍽️</option>
+        <option value="Fastfood, keeping it simple">Fastfood, keeping it simple 🍔</option>
+        <option value="Surprise me">Surprise me 😳</option>
+      </select>
+    </div>
+    <button id="confirmBtn" onclick="confirmDate()">Confirm our date 💕</button>
+  </div>
+
+  <div id="step3">
+    <div class="cat">🥰</div>
+    <h2>it's a date!</h2>
+    <div id="summary"></div>
+  </div>
+
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const wrap = document.getElementById('buttonsWrap');
+  let scale = 1;
+  let dodgeCount = 0;
+
+  function dodge() {
+    dodgeCount++;
+    scale = Math.min(scale + 0.18, 2.6);
+    yesBtn.style.transform = 'scale(' + scale + ')';
+    yesBtn.style.fontSize = '16px';
+
+    const maxX = wrap.clientWidth - noBtn.offsetWidth - 10;
+    const maxY = wrap.clientHeight - noBtn.offsetHeight - 10;
+    const randX = Math.random() * maxX;
+    const randY = Math.random() * maxY;
+
+    noBtn.style.left = randX + 'px';
+    noBtn.style.top = randY + 'px';
+
+    const texts = ["No", "Are you sure?", "Really?", "Think again", "Nope, catch me", "Last chance!", "You can't click me"];
+    noBtn.textContent = texts[Math.min(dodgeCount, texts.length - 1)];
+  }
+
+  function goToStep2() {
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+  }
+
+  function confirmDate() {
+    const date = document.getElementById('dateInput').value;
+    const place = document.getElementById('placeInput').value;
+
+    if (!date) {
+      alert("Pick a date first! 🥺");
+      return;
+    }
+    if (!place) {
+      alert("Pick where we're eating! 🥺");
+      return;
+    }
+
+    const formatted = new Date(date + 'T00:00:00').toLocaleDateString('en-US', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    document.getElementById('summary').innerHTML =
+      '<b>Date:</b> ' + formatted + '<br><b>Menu:</b> ' + place;
+
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step3').style.display = 'block';
+
+    burstHearts();
+  }
+
+  function burstHearts() {
+    const card = document.getElementById('card');
+    for (let i = 0; i < 12; i++) {
+      const h = document.createElement('span');
+      h.textContent = '💗';
+      h.style.left = (Math.random() * 90 + 5) + '%';
+      h.style.bottom = '10px';
+      h.style.animationDelay = (Math.random() * 0.6) + 's';
+      h.className = 'hearts';
+      card.appendChild(h);
+      setTimeout(() => h.remove(), 3000);
+    }
+  }
+</script>
+
+</body>
+</html>
